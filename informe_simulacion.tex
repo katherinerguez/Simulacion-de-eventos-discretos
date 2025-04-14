@@ -1,0 +1,62 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\begin{document}
+   \title{Simulación \\ \large Simulación de eventos discretos}
+\author{Katherine Rodríguez Rodríguez}
+\date{April 2025}
+    \maketitle
+    
+    \section{Introducción}
+Para la simulación de eventos discretos se analiza la evolución del sistema a partir del seguimiento de sus cambios de estado. Este proyecto busca dar solución a uno de los problemas planteados en el libro "\underline{Aplicando Teoría de Colas en} \underline{Dirección de Operaciones}", capítulo 6. El ejercicio se titula: Mantenimiento de Robots, este consiste en una fábrica que usa cinco robots, los cuales se estropean periódicamente, y la compañía tiene dos reparadores para las reparaciones. Las preguntas a dar solución es el número medio de robots operativos en cualquier momento, el tiempo que un robot tarda en ser reparado, el porcentaje de tiempo en que algún operario está parado. \\ 
+Las variables ha tener en cuenta es la cantidad de robots(5), la cantidad de reparadores (2), el tiempo hasta que el siguiente robots se rompe distribuye exponencialmente con una media de 30 horas y el tiempo que se tarda la reparación también distribuye exponencialmente con una media de 3 horas. \\
+Cada robot trabaja hasta fallar y cuando esto sucede se añade a la cola para ser reparado y deja de estar operativo. En cuanto un reparador está disponible, se reparan los robots y después vuelve a estar trabajando.
+\section{Detalles de Implementación}
+Para dar solución a este ejercicio, primero analizamos los parámetros: la cantidad de robots, la cantidad de reparadores, el tiempo que se demoran en fallar y el tiempo que se demoran en recuperarse. Además se crea variables contadoras para los que están en reparación y en operativos. Es importante observar cómo funcionaría el sistema y las distribuciones que toman los tiempos, en este caso daban como detalle que era exponencialmente. Se crea un entorno para la simulación utilizando simpy ya que es posible modelar componentes activos como clientes, vehículos o agentes. Se registran los eventos importantes como los fallos, reparaciones y estados de los reparadores.
+\section{Resultados y Experimentos}
+Después de realizar y ejecutar la simulación, los resultados fueron bastantes favorables pues el número medio de robots operativos es 4.54 , tiempo promedio de reparación que es de 3.06 horas, el porcentaje de tiempo con algún operario inactivo es de 38.06\%. De estos resultados obtenidos se puede decir que es muy cercano a los parámetros iniciales, la mayor parte del tiempo están funcionando la mayoría de los robots y se demoran el mismo tiemmpo en ser reparados y uno de los reparados se encuentra parado cerca de la mitad del tiempo, por lo que que se puede asumir que no se genera mucha o es casi inexistente la cola para ser reparados. La figura 1 a continuación muestra la frecuencia en que se encuentran los robots operativos, la mayor parte se encuentra en funcionamiento más de la mitad de los robots. \\
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{operativos.png}
+    \caption{Frecuencia de los robots operativos en la simulación}
+    \label{fig:robots_operativos}
+\end{figure}
+
+Al observar detalladamente las figuras de los resulatdos de los experimentos se puede ver que cuando se disminuye uno de los reparadores no se produce mucha cola, ni disminuye mucho la cantidad de robots en funcionamiento (ver Figura 3). Sin embargo al disminuir el tiempo entre fallos manteniendo los 2 reparadores, se produce una disminucion en la cantidad den robots y puede producir cola en el momento de la reparación (ver Figura 2).\\
+
+Se ejecutó la simulación por 100,000 horas para alcanzar el estado estable. Al realizar los experimentos es necesario e importante el análisis estadístico para medir la sensibilidad y ver si existe diferencias significativas en los experimentos.  Establecer que los valores no sean aleatorios teniendo un intervalo de confianza, también es importante.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{ex1.png}
+    \caption{Evolucion de los robots operativos en la simulación}
+    \label{fig:exp1}
+\vspace{0.4cm}
+    \includegraphics[width=1.0\textwidth]{ex2.png}
+    \caption{Evolucion de los robots operativos en la simulación}
+    \label{fig:exp2}
+\end{figure}
+
+Los experimentos que se realizó en la simulación fue quitar uno de los reparadores y además disminuir el tiempo en que vuelve  a fallar un robot.\\
+
+Los resultados de la prueba confirmatoria ANOVA, y la prueba de Post-Hoc, para medir las difernecias significativas entre los experimentos confirman que sí existen las diferncias. Los cambios en las variables del sistema afectan afectan el comportamiento de los robots. La figura 4, es de boxplots, que ilustra las diferencias ya que las cajas no están superpuestas. Al calcular los intervalos de confianzas se oberva mejor la variabilidad y en este caso era estrecha, y los mejores valores y donde se econtraban más robots en funcionamiento fue donde se redujo solamente los reparadores.\\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{box.png}
+    \caption{Distribucion de los robots operativos en los experimentos}
+    \label{fig:boxplots}
+\end{figure}
+
+\section{Modelo Matemático}
+El modelo matemático que se utilizó en la simulación fue de la teoría de colas y procesos estocásticos. Los tiempos seguían una distribución exponencial y los reparadores actúan como servidores en paralelo.\\
+Los resultados de la simulación se comparan con los valores obtenidos al realizar un análisis teórico, los cuales fueron satisfactorios. Para medir qué tan bien el modelo teórico se ajusta a los datos de simulación, se usa el Error Cuadrático Medio (MSE). Si este da bajito entonces el modelo predice bien, por lo que quedó demostrado, dio 0.000, un valor bien bajito.
+
+\section{Conclusiones}
+Como conclusión de la simulación y de este proyecto puede servir de ayuda a la toma de decisiones para optimizar los procesos y distribuir mejor los recursos. De acuerdo a experimentos se pudo observar que las disminuir uno de los reparadores y mantener los demás parámetros, todavía habían bastantes robots en funcionamiento y no se produce tata cola para las reparaciones. 
+\section{Bibliografía}
+ [1]simpy.readthedocs.io/en/latest/index.html\\
+
+[2]"\underline{Aplicando Teoría de Colas en Dirección de Operaciones}", capítulo 6.
+\end{document}
